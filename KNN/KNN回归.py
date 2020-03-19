@@ -30,13 +30,46 @@ clf.fit(X_train, y_train)
 predictions = clf.predict(X_test)
 print('Predicted weights: %s' % predictions)
 
-#R2系数
+# R2系数
 print('Coefficient of determination: %s' % r2_score(y_test,
                                                     predictions))
-#MAE是预测结果绝对误差的均值（y-yi）求和后求均值
+# MAE是预测结果绝对误差的均值（y-yi）求和后求均值
 print('Mean absolute error: %s' % mean_absolute_error(y_test,
                                                       predictions))
-#MSE是均方误差（y-yi）的平方求和后求均值
+# MSE是均方误差（y-yi）的平方求和后求均值
 print('Mean squared error: %s' % mean_squared_error(y_test,
                                                     predictions))
 
+from scipy.spatial.distance import euclidean
+
+# #heights in millimeters 特征缩放
+# X_train = np.array([
+# [1700, 1],
+# [1600, 0]
+# ])
+# x_test = np.array([1640, 1]).reshape(1, -1)
+# print(X_train,x_test)
+# print(euclidean(X_train[0,:],x_test))
+# print(euclidean(X_train[1,:],x_test))
+
+# 对数据进行标准化处理
+from sklearn.preprocessing import StandardScaler
+
+ss = StandardScaler()
+# 将这些数据变成均值为0，方差为1的数据
+# 均值归一化数据
+X_train_scaled = ss.fit_transform(X_train)
+print(X_train)
+print(X_train_scaled)
+
+X_test_scaled = ss.transform(X_test)
+
+clf.fit(X_train_scaled, y_train)
+predictions = clf.predict(X_test_scaled)
+print('Predicted wieghts: %s' % predictions)
+print('Coefficient of determination: %s' % r2_score(y_test,
+                                                    predictions))
+print('Mean absolute error: %s' % mean_absolute_error(y_test,
+                                                      predictions))
+print('Mean squared error: %s' % mean_squared_error(y_test,
+                                                    predictions))
